@@ -10,3 +10,9 @@
 
 **Corollary** - A theorem that can be established directly from a theorem that has been proven.
 
+**Parity** - Whether or not a number is odd or even
+
+**Degree** - The number of edges with that vertex as an end-point
+
+
+
