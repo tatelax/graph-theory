@@ -32,8 +32,6 @@
 
 **Incident** - An edge is incident on its end points
 
-
-
 **Adjacency Matrix** - A matrix which represents how many times 2 given **vertices** are adjacent (connected). 
 
 >  Read left to right.
@@ -65,3 +63,30 @@
 > G1 ⇠= G2
 
 ![Isomorphism](img/isomorphism.png)
+
+**Walk** - A walk from v to w is a finite alternating sequence of adjacent vertices and edges of G.
+
+> This basically means the path you take to get from one vertex to another. Walking the graph.
+>
+> The sequence alternates between vertex, edge, vertex, edge, ...
+
+**Length of a Walk** - Number of edges you walk in a sequence.
+
+**Trivial Walk** - When the length of a walk is zero. (1 vertex only in the sequence)
+
+**Open Walk** - When you start at a vertex and end at a different vertex in a sequence.
+
+**Closed Walk** - When you start at a vertex and end at the same vertex in a sequence.
+
+**Trail** (Type of Walk) - A trail from v to w is a walk from v to w that **does not** contain a repeated **edge**.
+
+**Path** (Type of Walk) - A path from v to w is a trail that **does not** contain a repeated **vertex**.
+
+**Distance** - The smallest length of a path between two vertices.
+
+**Circuit** - A trail that contains at least one edge and starts and ends at the same vertex.
+
+> All circuits are closed walks.
+>
+> A **simple circuit** is one with no repeating vertices.
+
