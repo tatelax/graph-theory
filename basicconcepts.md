@@ -1,4 +1,4 @@
-#  Basic Concept
+#  Basic Concepts
 
 **Conjecture** - A statement that is being proposed to be true
 
