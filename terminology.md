@@ -1,4 +1,4 @@
-# Terminology
+#  Terminology 
 
 **Conjecture** - A statement that is being proposed to be true
 
@@ -31,3 +31,14 @@
 > A loop causes a vertex to be *adjacent* to itself
 
 **Incident** - An edge is incident on its end points
+
+
+
+**Adjacency Matrix** - A matrix which represents how many times 2 given **vertices** are adjacent (connected). Read left to right. Typically labeled as A, the image does not show this.
+
+![Adjacency Matrix](adjacencymatrix.jpg)
+
+**Incidence Matrix** - A matrix which represents how many times a given **edge** is connected to a vertex. Read top to bottom left to right. For loops you put 2. Typically labeled as M, the picture is not correct.
+
+![Incidence Matrix](incidencematrix.png)
+
