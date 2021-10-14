@@ -38,7 +38,14 @@
 
 ![Adjacency Matrix](adjacencymatrix.jpg)
 
-**Incidence Matrix** - A matrix which represents how many times a given **edge** is connected to a vertex. Read top to bottom left to right. For loops you put 2. Typically labeled as M, the picture is not correct.
+**Incidence Matrix** - A matrix which represents how many times a given **edge** is connected to a vertex. Read top to bottom left to right. For loops you put 2. Typically labeled as M, the picture is not correct. If you read a column, there will only ever be 2 entries because an edge can only have 2 connected vertices.
 
 ![Incidence Matrix](incidencematrix.png)
 
+**Isomorphism** - Two graphs G1 and G2 are isomorphic if there exists a matching between their vertices so that two vertices are connected by an edge in G1 if and only if corresponding vertices are connected by an edge in G2.
+
+​	The below 2 graphs are the same (isomorphic) despite looking different and having different names for the vertices.
+
+​	**⇠=** The isomorphism symbol.
+
+![Isomorphism](isomorphism.png)
