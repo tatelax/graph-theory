@@ -42,11 +42,11 @@
 
 **Incidence Matrix** - A matrix which represents how many times a given **edge** is connected to a vertex. 
 
-> Read top to bottom left to right. 
+> Read top to bottom left to right.
 >
-> For loops you put 2. 
+> For loops you put 2.
 >
-> Typically labeled as M, the picture is not correct. 
+> Typically labeled as M, the picture is not correct.
 >
 > If you read a column, there will only ever be 2 entries because an edge can only have 2 connected vertices.
 
@@ -84,9 +84,40 @@
 
 **Distance** - The smallest length of a path between two vertices.
 
+> In the graph below, the distance between a and c is 1
+>
+> The distance between a and b is 1
+>
+> The distance between a and d is 2
+
+![Graph](graph.jpg)
+
 **Circuit** - A trail that contains at least one edge and starts and ends at the same vertex.
 
 > All circuits are closed walks.
 >
 > A **simple circuit** is one with no repeating vertices.
 
+**Eccentricity** - Denoted ecc (v), the distance from v to a vertex farthest from v.
+
+> ecc(a) = 2
+>
+> The eccentricity of a is 2 because d is the furthest vertex from a and the distance of a to d is 2.
+>
+> Remember, calculating distance means to use the shortest path from one vertex to another.
+>
+> Eccentricity is defined for a **vertex** not a graph.
+
+![Graph](graph.jpg)
+
+**Diameter** - Denoted diam(G), the maximum eccentricity possible of a graph.
+
+> The diameter of the above graph would be diam(G) = 2
+
+**Radius** - Denoted rad(G), the minimum eccentricity possible of a graph.
+
+> The radius of the above graph would be rad(G) = 1
+
+**Peripheral Vertex** - If ecc(v) = diam(G), then v is a peripheral vertex.
+
+**Central Vertex** - If ecc(v) = rad(G), then v is a central vertex.
