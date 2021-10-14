@@ -56,7 +56,7 @@
 
 
 
-**Isomorphism** - Two graphs G1 and G2 are isomorphic if there exists a matching between their vertices so that two vertices are connected by an edge in G1 if and only if corresponding vertices are connected by an edge in G2.
+**Isomorphism** - Two graphs G1 and G2 are isomorphic they have the same number of vertices and edges and if there exists a matching between their vertices so that two vertices are connected by an edge in G1 if and only if corresponding vertices are connected by an edge in G2.
 
 > The below 2 graphs are the same (isomorphic) despite looking different and having different names for the vertices.
 >
