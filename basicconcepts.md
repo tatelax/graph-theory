@@ -121,3 +121,53 @@
 **Peripheral Vertex** - If ecc(v) = diam(G), then v is a peripheral vertex.
 
 **Central Vertex** - If ecc(v) = rad(G), then v is a central vertex.
+
+**Connectedness** - A graph is connected if and only if there is a walk between each pair of vertices.
+
+**Component** - A disconnected set of edges from a graph.
+
+![disconnected graph](img/disconnectedgraph.png)
+
+**Disconnecting Set** - A set of edges whose removal disconnects G (graph).
+
+> In the below graph, the disconnecting set would be {b, c, d} because if you removed those edges, the graph would become disconnected.
+
+![disconnecting set](img/disconnectedset.png)
+
+**Cut Set** - A disconnecting set such that no proper subset of that disconnecting set is disconnecting.
+
+> In the above graph, {c, d} would be the cut set because you cannot remove any of those edges and still get a disconnecting set. For example if you just removed c or just removed d, the graph would still be connected.
+
+**Proper Subset** - A subset of a set such that it does not contain all of the elements of a set.
+
+**Bridge** - A cut set with 1 edge.
+
+> g is a bridge in the below graph. In the above graph, k would be the bridge.
+
+![bridge](img/bridge.png)
+
+**Edge Connectivity** - Denoted as λ(G), the minimum number of edges you would have to delete to disconnect the graph.
+
+> The edge connectivity **λ**(G) of the graph above is 1 because if you remove g the edge becomes disconnected.
+
+**Separating Set** - A set that contains the vertices whose removal from the graph (G) disconnects G.
+
+> Examples of separating sets from the above graph: {4}, {4, 6}. If you removed 4 or 6 vertices from the graph, it would become disconnected.
+
+**Cut Vertex** - A vertex such that if you delete it from the graph, you have more components.
+
+> 4 and 6 in the above graph are cut vertices because if you deleted them the number of components in graph G would increase.
+
+**Vertex Connectivity** - The number of vertices you would need to delete to disconnect a graph G.
+
+> The vertex connectivity in the above graph is 1 because if you removed one vertex (4 or 6) the graph would be disconnected.
+
+**Euler Trail** - A trail that visits every edge exactly once.
+
+> To know if a graph has an euler trail, every vertex should have an even degree except 2 of them.
+>
+> You start walking the path at an odd degree vertex.
+
+**Euler Circuit** - An euler trail that visits ever edge exactly once and starts and ends at the same vertex.
+
+**Eulerian Graph** - A connected graph G is Eulerian if and only if the degree of each vertex of G is even.
