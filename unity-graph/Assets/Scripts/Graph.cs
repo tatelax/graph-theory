@@ -48,15 +48,25 @@ public class Graph
 	{
 		vertices[u].AddLast(v);
 		vertices[v].AddLast(u);
+		
 		CreateEdgeView(u, v);
 	}
 
 	public void RemoveVertex(int vertex)
 	{
+		// Remove vertex from all of the things that vertex is connected to
+		foreach (int i in vertices[vertex])
+		{
+			vertices[i].Remove(vertex);
+		}
+		
+		// Remove the vertex itself
 		vertices.Remove(vertex);
 		
+		// Destroy the vertex gameObject
 		vertexViews[vertex].Destroy();
 		vertexViews.Remove(vertex);
+		
 		Print();
 	}
 
@@ -85,5 +95,7 @@ public class Graph
 
 			Debug.Log(output);
 		}
+		
+		Debug.Log("========== END OUTPUT ==========");
 	}
 }
