@@ -164,10 +164,15 @@
 
 **Euler Trail** - A trail that visits every edge exactly once.
 
-> To know if a graph has an euler trail, every vertex should have an even degree except 2 of them.
+> To know if a graph has an Euler trail, every vertex should have an even degree except 2 of them.
 >
 > You start walking the path at an odd degree vertex.
 
-**Euler Circuit** - An euler trail that visits ever edge exactly once and starts and ends at the same vertex.
+**Euler Circuit** - An Euler trail that visits ever edge exactly once and starts and ends at the same vertex.
 
 **Eulerian Graph** - A connected graph G is Eulerian if and only if the degree of each vertex of G is even.
+
+**Hamiltonian Circuit** - A circuit that contains each vertex in G exactly once, except for the starting and ending vertex that appears twice.
+
+> A graph with a Hamiltonian circuit is a Hamiltonian graph.
+
