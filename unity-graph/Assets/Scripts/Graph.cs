@@ -7,7 +7,8 @@ public class Graph
 	private class Node
 	{
 		public readonly GameObject VertexView;
-
+		public EdgeView EdgeView;
+		
 		public Node(Vector3 position)
 		{
 			VertexView = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -16,6 +17,7 @@ public class Graph
 
 		public void Destroy()
 		{
+			Object.Destroy(EdgeView.gameObject);
 			Object.Destroy(VertexView);
 		}
 	}
@@ -36,7 +38,7 @@ public class Graph
 	{
 		if (vertices.ContainsKey(value))
 		{
-			Debug.Log($"Vertex {value} already exists.");
+			Debug.LogWarning($"Vertex {value} already exists.");
 			return;
 		}
 		
@@ -54,6 +56,12 @@ public class Graph
 
 	public void RemoveVertex(int vertex)
 	{
+		if (!vertices.ContainsKey(vertex))
+		{
+			Debug.LogWarning($"Tried to remove {vertex}, but it doesn't exist.");
+			return;
+		}
+		
 		// Remove vertex from all of the things that vertex is connected to
 		foreach (int i in vertices[vertex])
 		{
@@ -63,7 +71,7 @@ public class Graph
 		// Remove the vertex itself
 		vertices.Remove(vertex);
 		
-		// Destroy the vertex gameObject
+		// Destroy the vertex gameObject and its edgeview if it has one
 		vertexViews[vertex].Destroy();
 		vertexViews.Remove(vertex);
 		
@@ -77,6 +85,10 @@ public class Graph
 		Vector3 startVertexPos = vertexViews[start].VertexView.transform.position;
 		Vector3 endVertexPos = vertexViews[end].VertexView.transform.position;
 
+		vertexViews[start].EdgeView = newEdge;
+		vertexViews[end].EdgeView = newEdge;
+		
+		// Sets the start and end vertices of the line renderer so we can see it
 		newEdge.Init(startVertexPos, endVertexPos);
 	}
 

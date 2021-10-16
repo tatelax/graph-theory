@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class EdgeView : MonoBehaviour
 {
-	[SerializeField] private LineRenderer renderer;
+	[SerializeField] private LineRenderer lineRenderer;
 	
 	public void Init(Vector3 start, Vector3 end)
 	{
-		renderer.alignment = LineAlignment.View;
-		renderer.positionCount = 2;
-		renderer.SetPosition(0, start);
-		renderer.SetPosition(1, end);
+		lineRenderer.alignment = LineAlignment.View;
+		lineRenderer.positionCount = 2;
+		lineRenderer.SetPosition(0, start);
+		lineRenderer.SetPosition(1, end);
 	}
 }
