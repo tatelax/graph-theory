@@ -6,30 +6,30 @@ public class Graph
 {
 	private class Node
 	{
-		public readonly GameObject nodeView;
+		public readonly GameObject VertexView;
 
 		public Node(Vector3 position)
 		{
-			nodeView = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			nodeView.transform.position = position;
+			VertexView = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			VertexView.transform.position = position;
 		}
 
-		~Node()
+		public void Destroy()
 		{
-			Object.Destroy(nodeView);
+			Object.Destroy(VertexView);
 		}
 	}
 
-	private Dictionary<int, Node> nodeViews;
-	private Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
+	private readonly Dictionary<int, Node> vertexViews;
+	private readonly Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
 
-	private GameObject edgePrefab;
+	private readonly GameObject edgePrefab;
 	
 	public Graph(GameObject _edgePrefab)
 	{
 		edgePrefab = _edgePrefab;
 		vertices = new Dictionary<int, LinkedList<int>>();
-		nodeViews = new Dictionary<int, Node>();
+		vertexViews = new Dictionary<int, Node>();
 	}
 
 	public void AddVertex(int value, Vector3 position = new Vector3())
@@ -41,21 +41,31 @@ public class Graph
 		}
 		
 		vertices.Add(value, new LinkedList<int>());
-		nodeViews.Add(value, new Node(position));
+		vertexViews.Add(value, new Node(position));
 	}
 
 	public void AddEdge(int u, int v)
 	{
 		vertices[u].AddLast(v);
+		vertices[v].AddLast(u);
 		CreateEdgeView(u, v);
+	}
+
+	public void RemoveVertex(int vertex)
+	{
+		vertices.Remove(vertex);
+		
+		vertexViews[vertex].Destroy();
+		vertexViews.Remove(vertex);
+		Print();
 	}
 
 	private void CreateEdgeView(int start, int end)
 	{
 		EdgeView newEdge = Object.Instantiate(edgePrefab).GetComponent<EdgeView>();
 
-		Vector3 startVertexPos = nodeViews[start].nodeView.transform.position;
-		Vector3 endVertexPos = nodeViews[end].nodeView.transform.position;
+		Vector3 startVertexPos = vertexViews[start].VertexView.transform.position;
+		Vector3 endVertexPos = vertexViews[end].VertexView.transform.position;
 
 		newEdge.Init(startVertexPos, endVertexPos);
 	}

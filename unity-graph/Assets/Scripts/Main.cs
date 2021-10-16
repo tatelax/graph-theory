@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,10 +7,12 @@ public class Main : MonoBehaviour
 	[SerializeField] private int startingVertices;
 	[SerializeField] private float radius = 10f;
 	[SerializeField] private GameObject edgePrefab;
+
+	private Graph graph;
 	
 	private void Start()
 	{
-		Graph graph = new Graph(edgePrefab);
+		graph = new Graph(edgePrefab);
 
 		for (int i = 0; i < startingVertices; i++)
 		{
@@ -22,5 +25,13 @@ public class Main : MonoBehaviour
 		}
 		
 		graph.Print();
+	}
+
+	private void OnGUI()
+	{
+		if (GUILayout.Button("Destroy"))
+		{
+			graph.RemoveVertex(0);
+		}
 	}
 }
