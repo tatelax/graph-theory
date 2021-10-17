@@ -4,34 +4,18 @@ using UnityEngine;
 
 public class Graph
 {
-	private class Node
-	{
-		public readonly GameObject VertexView;
-		public EdgeView EdgeView;
-		
-		public Node(Vector3 position)
-		{
-			VertexView = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			VertexView.transform.position = position;
-		}
-
-		public void Destroy()
-		{
-			Object.Destroy(EdgeView.gameObject);
-			Object.Destroy(VertexView);
-		}
-	}
-
-	private readonly Dictionary<int, Node> vertexViews;
+	public readonly Dictionary<int, VertexView> vertexViews;
 	private readonly Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
 
+	private readonly GameObject vertexPrefab;
 	private readonly GameObject edgePrefab;
 	
-	public Graph(GameObject _edgePrefab)
+	public Graph(GameObject _edgePrefab, GameObject _vertexPrefab)
 	{
 		edgePrefab = _edgePrefab;
+		vertexPrefab = _vertexPrefab;
 		vertices = new Dictionary<int, LinkedList<int>>();
-		vertexViews = new Dictionary<int, Node>();
+		vertexViews = new Dictionary<int, VertexView>();
 	}
 
 	public void AddVertex(int value, Vector3 position = new Vector3())
@@ -43,11 +27,20 @@ public class Graph
 		}
 		
 		vertices.Add(value, new LinkedList<int>());
-		vertexViews.Add(value, new Node(position));
+
+		VertexView vertexView = Object.Instantiate(vertexPrefab).GetComponent<VertexView>();
+		vertexView.Init(position);
+		vertexViews.Add(value, vertexView);
 	}
 
 	public void AddEdge(int u, int v)
 	{
+		if (!vertices.ContainsKey(u) || !vertices.ContainsKey(v))
+		{
+			Debug.LogWarning($"Tried to connect vertex {u} to {v} but one of them didn't exist!");
+			return;
+		}
+		
 		vertices[u].AddLast(v);
 		vertices[v].AddLast(u);
 		
@@ -82,16 +75,13 @@ public class Graph
 	{
 		EdgeView newEdge = Object.Instantiate(edgePrefab).GetComponent<EdgeView>();
 
-		Vector3 startVertexPos = vertexViews[start].VertexView.transform.position;
-		Vector3 endVertexPos = vertexViews[end].VertexView.transform.position;
-
 		vertexViews[start].EdgeView = newEdge;
 		vertexViews[end].EdgeView = newEdge;
 		
 		// Sets the start and end vertices of the line renderer so we can see it
-		newEdge.Init(startVertexPos, endVertexPos);
+		newEdge.Init(this, start, end);
 	}
-
+	
 	public void Print()
 	{
 		foreach (KeyValuePair<int,LinkedList<int>> vertex in vertices)

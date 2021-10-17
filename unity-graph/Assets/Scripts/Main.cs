@@ -1,18 +1,21 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Main : MonoBehaviour
 {
+	[Header("Settings")]
 	[SerializeField] private int startingVertices;
 	[SerializeField] private float radius = 10f;
+	
+	[Header("References")]
 	[SerializeField] private GameObject edgePrefab;
-
+	[SerializeField] private GameObject vertexPrefab;
+	
 	private Graph graph;
 	
 	private void Start()
 	{
-		graph = new Graph(edgePrefab);
+		graph = new Graph(edgePrefab, vertexPrefab);
 
 		for (int i = 0; i < startingVertices; i++)
 		{
