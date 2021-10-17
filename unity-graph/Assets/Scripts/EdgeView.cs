@@ -9,6 +9,9 @@ public class EdgeView : MonoBehaviour
 	private int start;
 	private int end;
 	
+	private Vector3 vertex0Prev;
+	private Vector3 vertex1Prev;
+	
 	public void Init(Graph _graph, int _start, int _end)
 	{
 		graph = _graph;
@@ -23,7 +26,20 @@ public class EdgeView : MonoBehaviour
 
 	public void Update()
 	{
-		lineRenderer.SetPosition(0, graph.vertexViews[start].transform.position);
-		lineRenderer.SetPosition(1, graph.vertexViews[end].transform.position);
+		Vector3 vertex0Pos = graph.vertexViews[start].transform.position;
+		Vector3 vertex1Pos = graph.vertexViews[end].transform.position;
+		
+		if (vertex0Pos != vertex0Prev)
+		{
+			lineRenderer.SetPosition(0, vertex0Pos);
+		}
+
+		if (vertex1Pos != vertex1Prev)
+		{
+			lineRenderer.SetPosition(1, vertex1Pos);
+		}
+
+		vertex0Prev = vertex0Pos;
+		vertex1Prev = vertex1Pos;
 	}
 }
