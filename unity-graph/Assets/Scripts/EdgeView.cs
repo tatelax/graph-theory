@@ -26,6 +26,13 @@ public class EdgeView : MonoBehaviour
 
 	public void Update()
 	{
+		//TODO: Optimize
+		if (!graph.vertexViews.ContainsKey(start) || !graph.vertexViews.ContainsKey(end))
+		{
+			Destroy(this);
+			return;
+		}
+		
 		Vector3 vertex0Pos = graph.vertexViews[start].transform.position;
 		Vector3 vertex1Pos = graph.vertexViews[end].transform.position;
 		

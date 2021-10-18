@@ -5,7 +5,7 @@ using UnityEngine;
 public class Graph
 {
 	public readonly Dictionary<int, VertexView> vertexViews;
-	private readonly Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
+	public readonly Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
 
 	private readonly GameObject vertexPrefab;
 	private readonly GameObject edgePrefab;
@@ -29,8 +29,10 @@ public class Graph
 		vertices.Add(value, new LinkedList<int>());
 
 		VertexView vertexView = Object.Instantiate(vertexPrefab).GetComponent<VertexView>();
-		vertexView.Init(position);
+		vertexView.Init(position, value);
 		vertexViews.Add(value, vertexView);
+		
+		Debug.Log($"Added vertex {value}");
 	}
 
 	public void AddEdge(int u, int v)
