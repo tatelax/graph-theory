@@ -379,11 +379,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee57cf4393d4aa46a498f4d29b4d9b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingVertices: 8
-  radius: 20
+  startingVertices: 3
+  radius: 10
   edgePrefab: {fileID: 8642047811486528221, guid: 3510a18a1cbd44c438606173daef5edc, type: 3}
   vertexPrefab: {fileID: 1889198221852296800, guid: bcf036d0f6077c9488e65fa10baa3a43, type: 3}
-  camera: {fileID: 1633625087}
+  mainCamera: {fileID: 1633625087}
 --- !u!4 &1895197001
 Transform:
   m_ObjectHideFlags: 0

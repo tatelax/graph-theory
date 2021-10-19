@@ -15,7 +15,7 @@
      public float distanceMin = .5f;
      public float distanceMax = 15f;
   
-     private Rigidbody rigidbody;
+     private Rigidbody cameraRigidbody;
   
      float x = 0.0f;
      float y = 0.0f;
@@ -27,12 +27,12 @@
          x = angles.y;
          y = angles.x;
   
-         rigidbody = GetComponent<Rigidbody>();
+         cameraRigidbody = GetComponent<Rigidbody>();
   
          // Make the rigid body not change rotation
-         if (rigidbody != null)
+         if (cameraRigidbody != null)
          {
-             rigidbody.freezeRotation = true;
+             cameraRigidbody.freezeRotation = true;
          }
      }
   

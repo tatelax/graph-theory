@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Graph
 {
-	public readonly Dictionary<int, VertexView> vertexViews;
-	public readonly Dictionary<int, LinkedList<int>> vertices; // key = value of the vertex, value = connected vertices
+	private readonly Dictionary<Vertex, LinkedList<Vertex>> vertices; // key = value of the vertex, value = connected vertices
 
 	private readonly GameObject vertexPrefab;
 	private readonly GameObject edgePrefab;
@@ -14,28 +13,22 @@ public class Graph
 	{
 		edgePrefab = _edgePrefab;
 		vertexPrefab = _vertexPrefab;
-		vertices = new Dictionary<int, LinkedList<int>>();
-		vertexViews = new Dictionary<int, VertexView>();
+		vertices = new Dictionary<Vertex, LinkedList<Vertex>>();
 	}
 
-	public void AddVertex(int value, Vector3 position = new Vector3())
+	public Vertex AddVertex(int value, Vector3 position = new Vector3())
 	{
-		if (vertices.ContainsKey(value))
-		{
-			Debug.LogWarning($"Vertex {value} already exists.");
-			return;
-		}
+		Vertex newVertex = Object.Instantiate(vertexPrefab).GetComponent<Vertex>();
+		newVertex.Init(position, value);
 		
-		vertices.Add(value, new LinkedList<int>());
-
-		VertexView vertexView = Object.Instantiate(vertexPrefab).GetComponent<VertexView>();
-		vertexView.Init(position, value);
-		vertexViews.Add(value, vertexView);
+		vertices.Add(newVertex, new LinkedList<Vertex>());
 		
 		Debug.Log($"Added vertex {value}");
+
+		return newVertex;
 	}
 
-	public void AddEdge(int u, int v)
+	public void Connect(Vertex u, Vertex v)
 	{
 		if (!vertices.ContainsKey(u) || !vertices.ContainsKey(v))
 		{
@@ -46,10 +39,12 @@ public class Graph
 		vertices[u].AddLast(v);
 		vertices[v].AddLast(u);
 		
+		Debug.Log($"Connected vertex {u.value} to {v.value}");
+		
 		CreateEdgeView(u, v);
 	}
 
-	public void RemoveVertex(int vertex)
+	public void RemoveVertex(Vertex vertex)
 	{
 		if (!vertices.ContainsKey(vertex))
 		{
@@ -58,47 +53,69 @@ public class Graph
 		}
 		
 		// Remove vertex from all of the things that vertex is connected to
-		foreach (int i in vertices[vertex])
+		foreach (Vertex i in vertices[vertex])
 		{
 			vertices[i].Remove(vertex);
 		}
 		
-		// Remove the vertex itself
+		vertex.Destroy();
 		vertices.Remove(vertex);
-		
-		// Destroy the vertex gameObject and its edgeview if it has one
-		vertexViews[vertex].Destroy();
-		vertexViews.Remove(vertex);
 		
 		Print();
 	}
 
-	private void CreateEdgeView(int start, int end)
+	private void CreateEdgeView(Vertex start, Vertex end)
 	{
-		EdgeView newEdge = Object.Instantiate(edgePrefab).GetComponent<EdgeView>();
-
-		vertexViews[start].EdgeView = newEdge;
-		vertexViews[end].EdgeView = newEdge;
+		Edge newEdge = Object.Instantiate(edgePrefab).GetComponent<Edge>();
 		
 		// Sets the start and end vertices of the line renderer so we can see it
 		newEdge.Init(this, start, end);
+		
+		Print();
+	}
+
+	public int GetTotalDegrees()
+	{
+		int value = 0;
+
+		foreach (KeyValuePair<Vertex,LinkedList<Vertex>> vertex in vertices)
+		{
+			value += vertex.Value.Count;
+		}
+
+		return value;
+	}
+
+	public int GetVertexDegree(Vertex vertex)
+	{
+		if (!vertices.ContainsKey(vertex))
+		{
+			Debug.LogError("Vertex not found!");
+			return -1;
+		}
+
+		return vertices[vertex].Count;
 	}
 	
 	public void Print()
 	{
-		foreach (KeyValuePair<int,LinkedList<int>> vertex in vertices)
+		Debug.Log("========== START OUTPUT ==========");
+
+		foreach (KeyValuePair<Vertex,LinkedList<Vertex>> vertex in vertices)
 		{
 			StringBuilder output = new StringBuilder();
 
-			output.Append($"[{vertex.Key}]: ");
+			output.Append($"[{vertex.Key.value}]: ");
 			
-			foreach (int i in vertex.Value)
+			foreach (Vertex i in vertex.Value)
 			{
-				output.Append($"-> {i} ");
+				output.Append($"-> {i.value} ");
 			}
 
 			Debug.Log(output);
 		}
+		
+		Debug.Log($"Total Degrees: {GetTotalDegrees().ToString()}");
 		
 		Debug.Log("========== END OUTPUT ==========");
 	}

@@ -1,18 +1,18 @@
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class EdgeView : MonoBehaviour
+public class Edge : MonoBehaviour
 {
 	[SerializeField] private LineRenderer lineRenderer;
 
 	private Graph graph;
-	private int start;
-	private int end;
+	private Vertex start;
+	private Vertex end;
 	
 	private Vector3 vertex0Prev;
 	private Vector3 vertex1Prev;
 	
-	public void Init(Graph _graph, int _start, int _end)
+	public void Init(Graph _graph, Vertex _start, Vertex _end)
 	{
 		graph = _graph;
 		start = _start;
@@ -20,21 +20,14 @@ public class EdgeView : MonoBehaviour
 
 		lineRenderer.alignment = LineAlignment.View;
 		lineRenderer.positionCount = 2;
-		lineRenderer.SetPosition(0, graph.vertexViews[start].transform.position);
-		lineRenderer.SetPosition(1, graph.vertexViews[end].transform.position);
+		lineRenderer.SetPosition(0, start.transform.position);
+		lineRenderer.SetPosition(1, end.transform.position);
 	}
 
 	public void Update()
 	{
-		//TODO: Optimize
-		if (!graph.vertexViews.ContainsKey(start) || !graph.vertexViews.ContainsKey(end))
-		{
-			Destroy(this);
-			return;
-		}
-		
-		Vector3 vertex0Pos = graph.vertexViews[start].transform.position;
-		Vector3 vertex1Pos = graph.vertexViews[end].transform.position;
+		Vector3 vertex0Pos = start.transform.position;
+		Vector3 vertex1Pos = end.transform.position;
 		
 		if (vertex0Pos != vertex0Prev)
 		{
