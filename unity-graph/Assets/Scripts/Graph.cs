@@ -44,7 +44,7 @@ public class Graph
 		CreateEdgeView(u, v);
 	}
 
-	public void RemoveVertex(Vertex vertex)
+	public void RemoveVertex(Vertex vertex) 
 	{
 		if (!vertices.ContainsKey(vertex))
 		{
@@ -55,9 +55,15 @@ public class Graph
 		// Remove vertex from all of the things that vertex is connected to
 		foreach (Vertex i in vertices[vertex])
 		{
+			foreach (Edge vertexConnectedEdge in vertex.connectedEdges)
+			{
+				vertexConnectedEdge.Destroy();
+				i.DisconnectEdge(vertexConnectedEdge);
+			}
+			
 			vertices[i].Remove(vertex);
 		}
-		
+
 		vertex.Destroy();
 		vertices.Remove(vertex);
 		
@@ -69,8 +75,8 @@ public class Graph
 		Edge newEdge = Object.Instantiate(edgePrefab).GetComponent<Edge>();
 		
 		// Sets the start and end vertices of the line renderer so we can see it
-		newEdge.Init(this, start, end);
-		
+		newEdge.Init(start, end);
+
 		Print();
 	}
 

@@ -5,16 +5,14 @@ public class Edge : MonoBehaviour
 {
 	[SerializeField] private LineRenderer lineRenderer;
 
-	private Graph graph;
 	private Vertex start;
 	private Vertex end;
 	
 	private Vector3 vertex0Prev;
 	private Vector3 vertex1Prev;
 	
-	public void Init(Graph _graph, Vertex _start, Vertex _end)
+	public void Init(Vertex _start, Vertex _end)
 	{
-		graph = _graph;
 		start = _start;
 		end = _end;
 
@@ -26,6 +24,14 @@ public class Edge : MonoBehaviour
 
 	public void Update()
 	{
+		// Prob not the best way to check if we need to delete an edge
+		// but this is just an example project
+		if (!start || !end)
+		{
+			Destroy();
+			return;
+		}
+		
 		Vector3 vertex0Pos = start.transform.position;
 		Vector3 vertex1Pos = end.transform.position;
 		
@@ -41,5 +47,10 @@ public class Edge : MonoBehaviour
 
 		vertex0Prev = vertex0Pos;
 		vertex1Prev = vertex1Pos;
+	}
+
+	public void Destroy()
+	{
+		Object.Destroy(gameObject);
 	}
 }
