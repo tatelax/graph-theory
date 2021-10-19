@@ -96,6 +96,18 @@ public class Graph
 
 		return vertices[vertex].Count;
 	}
+
+	public int GetVerticesDegrees(List<Vertex> vertices)
+	{
+		int sum = 0;
+
+		for (int i = 0; i < vertices.Count; i++)
+		{
+			sum += GetVertexDegree(vertices[i]);
+		}
+		
+		return sum;
+	}
 	
 	public void Print()
 	{

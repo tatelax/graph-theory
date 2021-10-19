@@ -10,11 +10,12 @@ public class Controls : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private Main main;
+    [SerializeField] private GraphManager graphManager;
     [SerializeField] private TextMeshProUGUI totalDegrees;
     [SerializeField] private Button addButton;
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button connectButton;
+    [SerializeField] private TextMeshProUGUI selectedDegrees;
     
     private List<Vertex> selectedVertices;
     private Vertex prevSelected;
@@ -24,7 +25,7 @@ public class Controls : MonoBehaviour
     private void Start()
     {
         selectedVertices = new List<Vertex>();
-        radius = main.Radius;
+        radius = graphManager.Radius;
         
         addButton.onClick.AddListener(Add);
         deleteButton.onClick.AddListener(Delete);
@@ -74,19 +75,21 @@ public class Controls : MonoBehaviour
             }
         }
         
-        DoThings();
+        KeyboardControls();
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        totalDegrees.text = "Total Degrees: " + main.graph.GetTotalDegrees();
+        totalDegrees.text = "Total Degrees: " + graphManager.graph.GetTotalDegrees();
 
         connectButton.interactable = selectedVertices.Count == 2;
         deleteButton.interactable = selectedVertices.Count > 0;
+
+        selectedDegrees.text = selectedVertices.Count > 0 ? graphManager.graph.GetVerticesDegrees(selectedVertices).ToString() : "--";
     }
 
-    public void DoThings()
+    private void KeyboardControls()
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
@@ -106,14 +109,14 @@ public class Controls : MonoBehaviour
 
     private void Connect()
     {
-        main.graph.Connect(selectedVertices[0], selectedVertices[1]);
+        graphManager.graph.Connect(selectedVertices[0], selectedVertices[1]);
     }
 
     private void Delete()
     {
         for (int i = 0; i < selectedVertices.Count; i++)
         {
-            main.graph.RemoveVertex(selectedVertices[i]);
+            graphManager.graph.RemoveVertex(selectedVertices[i]);
             selectedVertices.RemoveAt(i);
         }
     }
@@ -122,12 +125,12 @@ public class Controls : MonoBehaviour
     {
         int value = (int)Math.Pow(Random.value * 100, 2);
         Vector3 position = Random.insideUnitSphere * radius;
-        main.graph.AddVertex(value, position);
+        graphManager.graph.AddVertex(value, position);
     }
     
     private void DeselectAll()
     {
-        for (var i = 0; i < selectedVertices.Count; i++)
+        for (int i = 0; i < selectedVertices.Count; i++)
         {
             selectedVertices[i].Deselect();
         }

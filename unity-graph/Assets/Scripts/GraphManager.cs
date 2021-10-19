@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Main : MonoBehaviour
+public class GraphManager : MonoBehaviour
 {
 	[Header("Settings")]
 	[SerializeField] private int startingVertices;
@@ -14,11 +14,8 @@ public class Main : MonoBehaviour
 
 	public Graph graph { get; private set; }
 
-	public float Radius
-	{
-		get => radius;
-	}
-	
+	public float Radius => radius;
+
 	private void Start()
 	{
 		graph = new Graph(edgePrefab, vertexPrefab);

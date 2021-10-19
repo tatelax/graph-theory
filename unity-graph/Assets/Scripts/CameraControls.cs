@@ -46,11 +46,8 @@
                  y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
              }
 
-  
              y = ClampAngle(y, yMinLimit, yMaxLimit);
-  
              Quaternion rotation = Quaternion.Euler(y, x, 0);
-  
              distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel")*5, distanceMin, distanceMax);
   
              Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
@@ -60,13 +57,14 @@
              transform.position = position;
          }
      }
-  
-     public static float ClampAngle(float angle, float min, float max)
+
+     private static float ClampAngle(float angle, float min, float max)
      {
          if (angle < -360F)
              angle += 360F;
          if (angle > 360F)
              angle -= 360F;
+         
          return Mathf.Clamp(angle, min, max);
      }
  }
